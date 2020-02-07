@@ -16,12 +16,6 @@
 #include <csignal>
 #include <unistd.h>
 
-void sigint_handler(int signal)
-{
-    kill(signal, -1);
-    std::quick_exit(1);
-}
-
 void sigchild_handler(int signal)
 {
     int status;
@@ -35,10 +29,12 @@ int main(int argc, char *argv[])
         std::cerr << "dev_contain_init must be ran as pid 1. Exiting." << std::endl;
         std::exit(-1);
     }
-    std::signal(SIGINT, sigint_handler);
     std::signal(SIGCHLD, sigchild_handler);
 
     std::cout << "dev_contain_init running." << std::endl;
-    pause();
+    while(true)
+    {
+        pause();
+    }
     return 0;
 }
