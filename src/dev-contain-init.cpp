@@ -16,12 +16,6 @@
 #include <csignal>
 #include <unistd.h>
 
-void sigint_handler(int signal)
-{
-    kill(signal, -1);
-    std::quick_exit(1);
-}
-
 void sigchild_handler(int signal)
 {
     int status;
@@ -36,7 +30,6 @@ int main(int argc, char *argv[])
         std::exit(-1);
     }
     std::signal(SIGCHLD, sigchild_handler);
-    std::signal(SIGINT, sigint_handler);
 
     std::cout << "dev_contain_init running." << std::endl;
     while(true)
