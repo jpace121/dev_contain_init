@@ -19,7 +19,11 @@
 void sigchild_handler(int signal)
 {
     int status;
-    waitpid(-1, &status, WNOHANG);
+    // Loop through because multiple processes may have
+    // been orphaned at once.
+    while( waitpid(-1, &status, WNOHANG) > 0 )
+    {
+    }
 }
 
 int main(int argc, char *argv[])
